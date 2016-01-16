@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Activity context</string>
+    <string name="title_activity_gpsactivated">GPSActivatedActivity</string>
+    <string name="position_text">The button above will check for the GPS permission (if you Android is > 6.0), get your GPS and show it into a new activity</string>
+    <string name="position_button">Show me my position!</string>
+    <string name="your_position">Your position is %1$s:%2$s</string>
+    <string name="refresh_position">Refresh my position</string>
+</resources>
