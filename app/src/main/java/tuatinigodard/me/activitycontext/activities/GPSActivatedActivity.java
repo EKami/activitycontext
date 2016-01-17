@@ -41,7 +41,7 @@ public class GPSActivatedActivity extends AppCompatActivity {
                 try {
                     // Clear the error textView first
                     errorTv.setText("");
-                    location = new LocationUtil(GPSActivatedActivity.this).getLatestKnownLocation();
+                    location = LocationUtil.getLatestKnownLocation(GPSActivatedActivity.this);
                     currentPositionTextView.setText(String.format(getString(R.string.your_position), location.getLatitude(), location.getLongitude()));
                 } catch (GpsNotActivatedException e) {
                     errorTv.setText(R.string.activate_gps);

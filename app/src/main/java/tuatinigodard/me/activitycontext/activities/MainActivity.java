@@ -22,7 +22,6 @@ import tuatinigodard.me.activitycontext.utils.LocationUtil;
 public class MainActivity extends AppCompatActivity {
 
     private static final int GPS_PERMISSION_REQUEST_CODE = 10;
-    private LocationUtil locationUtil;
     private Button showMeMyPositionButton;
     private TextView errorTv;
 
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private void initComponents() {
         showMeMyPositionButton = (Button) findViewById(R.id.showMeMyPosition);
         errorTv = (TextView) findViewById(R.id.errorTv);
-        locationUtil = new LocationUtil(this);
         showMeMyPositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, R.string.gps_permission_granted, Toast.LENGTH_SHORT).show();
                     try {
-                        Location location = locationUtil.getLatestKnownLocation();
+                        Location location = LocationUtil.getLatestKnownLocation(this);
                         Intent gpsActivityIntent = new Intent(MainActivity.this, GPSActivatedActivity.class);
                         gpsActivityIntent.putExtra(GPSActivatedActivity.LOCATION_EXTRA, location);
                         startActivity(gpsActivityIntent);

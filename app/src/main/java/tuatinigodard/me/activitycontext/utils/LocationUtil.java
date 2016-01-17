@@ -14,21 +14,15 @@ import tuatinigodard.me.activitycontext.exceptions.GpsNotActivatedException;
  */
 public class LocationUtil {
 
-    private LocationManager mLocationManager;
-    private Context context;
+    private static Context mContext;
 
-    public LocationUtil(Context context) {
-        if (context != null) {
-            this.context = context;
-            this.mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        }
-    }
-
-    public Location getLatestKnownLocation() throws GpsNotActivatedException {
+    public static Location getLatestKnownLocation(Context context) throws GpsNotActivatedException {
         Location location;
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        mContext = context;
+        LocationManager mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
 
