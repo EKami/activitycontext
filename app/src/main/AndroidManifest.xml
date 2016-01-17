@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GPSActivatedActivity"
-            android:label="@string/title_activity_gpsactivated" />
+            android:name=".activities.LocationPresenterActivity"
+            android:label="@string/title_activity_location_presenter" />
     </application>
 
 </manifest>

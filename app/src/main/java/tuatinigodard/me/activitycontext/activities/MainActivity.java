@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.gps_permission_granted, Toast.LENGTH_SHORT).show();
                     try {
                         Location location = LocationUtil.getLatestKnownLocation(this);
-                        Intent gpsActivityIntent = new Intent(MainActivity.this, GPSActivatedActivity.class);
-                        gpsActivityIntent.putExtra(GPSActivatedActivity.LOCATION_EXTRA, location);
+                        Intent gpsActivityIntent = new Intent(MainActivity.this, LocationPresenterActivity.class);
+                        gpsActivityIntent.putExtra(LocationPresenterActivity.LOCATION_EXTRA, location);
                         startActivity(gpsActivityIntent);
                         finish();
                     } catch (GpsNotActivatedException e) {

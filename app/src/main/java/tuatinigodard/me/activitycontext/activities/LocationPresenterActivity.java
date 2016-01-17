@@ -14,7 +14,7 @@ import tuatinigodard.me.activitycontext.utils.LocationUtil;
 /**
  * @author GODARD Tuatini on 16/01/16.
  */
-public class GPSActivatedActivity extends AppCompatActivity {
+public class LocationPresenterActivity extends AppCompatActivity {
 
     public static final String LOCATION_EXTRA = "location";
 
@@ -41,7 +41,7 @@ public class GPSActivatedActivity extends AppCompatActivity {
                 try {
                     // Clear the error textView first
                     errorTv.setText("");
-                    location = LocationUtil.getLatestKnownLocation(GPSActivatedActivity.this);
+                    location = LocationUtil.getLatestKnownLocation(LocationPresenterActivity.this);
                     currentPositionTextView.setText(String.format(getString(R.string.your_position), location.getLatitude(), location.getLongitude()));
                 } catch (GpsNotActivatedException e) {
                     errorTv.setText(R.string.activate_gps);
