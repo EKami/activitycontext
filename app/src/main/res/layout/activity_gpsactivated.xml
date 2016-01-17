@@ -17,6 +17,12 @@
         android:layout_marginBottom="10dp"
         android:text="@string/your_position" />
 
+    <TextView
+        android:id="@+id/errorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark" />
+
     <Button
         android:id="@+id/refreshPosition"
         android:layout_width="wrap_content"

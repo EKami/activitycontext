@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import tuatinigodard.me.activitycontext.R;
+import tuatinigodard.me.activitycontext.exceptions.GpsNotActivatedException;
 import tuatinigodard.me.activitycontext.utils.LocationUtil;
 
 /**
@@ -24,40 +25,18 @@ public class MainActivity extends AppCompatActivity {
     private LocationUtil locationUtil;
     private Button showMeMyPositionButton;
     private TextView errorTv;
-    private boolean firstLocationFetched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        showMeMyPositionButton = (Button) findViewById(R.id.showMeMyPosition);
-        errorTv = (TextView) findViewById(R.id.errorTv);
-        initComponentsListeners();
+        initComponents();
     }
 
-    private void initComponentsListeners() {
-        locationUtil = new LocationUtil(this, new LocationUtil.GPSListener() {
-            @Override
-            public void onNewLocationReceived(Location location) {
-                if (location != null && !firstLocationFetched) {
-                    firstLocationFetched = true;
-                    Intent gpsActivityIntent = new Intent(MainActivity.this, GPSActivatedActivity.class);
-                    gpsActivityIntent.putExtra(GPSActivatedActivity.LOCATION_EXTRA, location);
-                    startActivity(gpsActivityIntent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void gpsActivated() {
-                // Ignore
-            }
-
-            @Override
-            public void gpsDeactivated() {
-                errorTv.setText("You need to activate your GPS!");
-            }
-        });
+    private void initComponents() {
+        showMeMyPositionButton = (Button) findViewById(R.id.showMeMyPosition);
+        errorTv = (TextView) findViewById(R.id.errorTv);
+        locationUtil = new LocationUtil(this);
         showMeMyPositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,10 +61,18 @@ public class MainActivity extends AppCompatActivity {
             case GPS_PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "GPS permissions granted! Looking for location...", Toast.LENGTH_SHORT).show();
-                    locationUtil.startListener();
+                    Toast.makeText(this, R.string.gps_permission_granted, Toast.LENGTH_SHORT).show();
+                    try {
+                        Location location = locationUtil.getLatestKnownLocation();
+                        Intent gpsActivityIntent = new Intent(MainActivity.this, GPSActivatedActivity.class);
+                        gpsActivityIntent.putExtra(GPSActivatedActivity.LOCATION_EXTRA, location);
+                        startActivity(gpsActivityIntent);
+                        finish();
+                    } catch (GpsNotActivatedException e) {
+                        errorTv.setText(getString(R.string.activate_gps));
+                    }
                 } else {
-                    errorTv.setText("The application cannot continue without the GPS permission :'(");
+                    errorTv.setText(R.string.cannot_continue_without_gps_permissions);
                 }
             }
         }

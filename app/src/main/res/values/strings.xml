@@ -5,4 +5,7 @@
     <string name="position_button">Show me my position!</string>
     <string name="your_position">Your position is %1$s:%2$s</string>
     <string name="refresh_position">Refresh my position</string>
+    <string name="activate_gps">You need to activate your GPS!</string>
+    <string name="gps_permission_granted">GPS permissions granted! Looking for location…</string>
+    <string name="cannot_continue_without_gps_permissions">The application cannot continue without the GPS permission :\'(</string>
 </resources>
